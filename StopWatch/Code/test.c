@@ -34,10 +34,10 @@ while(1)
 								{
 									TimingSelection(StopWatch_ControlPort_A,CommonCathod,Sec01);
 									SevenSegment_Display(DIO_PORTB,CommonCathod,arr[counter_Sec01]);
-									_delay_ms(60);
+									_delay_ms(80);
 									TimingSelection(StopWatch_ControlPort_A,CommonCathod,Sec10);
 									SevenSegment_Display(DIO_PORTB,CommonCathod,arr[counter_Sec10]);
-									_delay_ms(120);
+									_delay_ms(80);
 									TimingSelection(StopWatch_ControlPort_A,CommonCathod,Min01);
 									SevenSegment_Display(DIO_PORTB,CommonCathod,arr[counter_Min01]);
 									_delay_ms(60);

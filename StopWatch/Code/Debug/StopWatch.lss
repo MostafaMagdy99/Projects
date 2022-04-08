@@ -7352,7 +7352,7 @@ while(1)
     31f0:	0e 94 21 0c 	call	0x1842	; 0x1842 <SevenSegment_Display>
     31f4:	80 e0       	ldi	r24, 0x00	; 0
     31f6:	90 e0       	ldi	r25, 0x00	; 0
-    31f8:	a0 e7       	ldi	r26, 0x70	; 112
+    31f8:	a0 ea       	ldi	r26, 0xA0	; 160
     31fa:	b2 e4       	ldi	r27, 0x42	; 66
     31fc:	8d ab       	std	Y+53, r24	; 0x35
     31fe:	9e ab       	std	Y+54, r25	; 0x36
@@ -7487,7 +7487,7 @@ _delay_ms(double __ms)
     32d2:	f1 f7       	brne	.-4      	; 0x32d0 <main+0x198>
     32d4:	9c a7       	std	Y+44, r25	; 0x2c
     32d6:	8b a7       	std	Y+43, r24	; 0x2b
-									_delay_ms(60);
+									_delay_ms(80);
 									TimingSelection(StopWatch_ControlPort_A,CommonCathod,Sec10);
     32d8:	80 e0       	ldi	r24, 0x00	; 0
     32da:	60 e0       	ldi	r22, 0x00	; 0
@@ -7509,7 +7509,7 @@ _delay_ms(double __ms)
     32fa:	0e 94 21 0c 	call	0x1842	; 0x1842 <SevenSegment_Display>
     32fe:	80 e0       	ldi	r24, 0x00	; 0
     3300:	90 e0       	ldi	r25, 0x00	; 0
-    3302:	a0 ef       	ldi	r26, 0xF0	; 240
+    3302:	a0 ea       	ldi	r26, 0xA0	; 160
     3304:	b2 e4       	ldi	r27, 0x42	; 66
     3306:	8f a3       	std	Y+39, r24	; 0x27
     3308:	98 a7       	std	Y+40, r25	; 0x28
@@ -7644,7 +7644,7 @@ _delay_ms(double __ms)
     33dc:	f1 f7       	brne	.-4      	; 0x33da <main+0x2a2>
     33de:	9e 8f       	std	Y+30, r25	; 0x1e
     33e0:	8d 8f       	std	Y+29, r24	; 0x1d
-									_delay_ms(120);
+									_delay_ms(80);
 									TimingSelection(StopWatch_ControlPort_A,CommonCathod,Min01);
     33e2:	80 e0       	ldi	r24, 0x00	; 0
     33e4:	60 e0       	ldi	r22, 0x00	; 0
