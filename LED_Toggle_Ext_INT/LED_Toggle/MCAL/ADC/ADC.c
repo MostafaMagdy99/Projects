@@ -36,7 +36,8 @@ static void (*User_Function)(void);
  * @param   	void 	:  		has no input paramater
  * @return  	void 	:		Return nothing
  */
-void ADC_Init(void)
+ /*****************************************************************************************************/
+STD_Return ADC_Init(ADC__State_t State)
 {
 	//Resolution Selection
 	#if defined Resolution_8_Bit
@@ -74,6 +75,18 @@ void ADC_Init(void)
 		SET_BIT(ADCSRA,ADPS1);
 		SET_BIT(ADCSRA,ADPS2);
 	#endif
+	switch (State)
+		{
+			case ADC_ENABLE:
+				SET_BIT(ADCSRA,ADEN);
+				break;
+			case ADC_DISABLE:
+				CLEAR_BIT(ADCSRA,ADEN);
+				break;
+			default:
+				return E_OK;
+		}
+		return E_NOK;
 
 }
 /*****************************************************************************************************/
@@ -121,16 +134,17 @@ STD_Return ADC_Start_conversion(u8 channel)
 	}
 	else
 	{
-		//Mask for non used bits of the 8 bits of the Regsiter
-		ADMUX &= Unselected_Channel_MASK;
 
-		//Mask for the usage 3 bits of the 8 bits
-		ADMUX |= channel;
+			//Mask for non used bits of the 8 bits of the Regsiter
+			ADMUX &= Unselected_Channel_MASK;
 
-		//Set the AdcStartConversion
-		SET_BIT(ADCSRA,ADSC);
+			//Mask for the usage 3 bits of the 8 bits
+			ADMUX |= channel;
 
-		while((GET_BIT(ADCSRA,ADIF))==1); //looping until the the flag is set and conversion finished
+			//Set the AdcStartConversion
+			SET_BIT(ADCSRA,ADSC);
+		while(GET_BIT(ADCSRA,ADSC) == 1);
+		 //Wait conversion to finish
 	}
 	return E_NOK;
 }
@@ -140,19 +154,19 @@ STD_Return ADC_Start_conversion(u8 channel)
  * Prototype			 :		extern STD_Return ADC_Get_Value(u32 *AdcResult);		
  * Description 			 :		function to get the value 
  * 
- * @param AdcResult 	 :		take the result of the Analog to digital conversion
+ * @param AdcResult 	 :		Get the value in ADC data registers
  * @return STD_Return 	 :		STD_Return for Error identification
  * 
  * 								return 0 mean Error is found , return 1 mean Error is not found
  **/
-STD_Return ADC_Get_Value(u32 *AdcResult)
+STD_Return ADC_Get_Value(u16 *AdcResult)
 {
 		u16 AdcResult_Temp=0;
 	#if defined Resolution_8_Bit
 		*AdcResult=ADCH;
 	#elif defined Resolution_10_Bit
-		AdcResult_Temp= ADCL + (ADCH<<8);
-		*AdcResult = (AdcResult_Temp & Resolution_10Bit_MASK);
+		AdcResult_Temp= ADCL + (ADCH<<8); //Get the values of the two ADC registers
+		*AdcResult = (AdcResult_Temp & Resolution_10Bit_MASK);//Mask higher bits in ADCH and read only the 10 bits for the ADC
 	#endif
 		return E_NOK;
 }
@@ -163,13 +177,14 @@ STD_Return ADC_Get_Value(u32 *AdcResult)
  * Description 			 :		function Combine between the Conversion and GetValue Function in one function
  * 
  * @param channel 		 :		takes the number of pin/ channel which is used in the conversion
- * @param AdcValue 		 :		take the result of the Analog to digital conversion ADC value
+ * @param AdcValue 		 :		Get the value in ADC data registers
  * @return STD_Return 	 :		STD_Return for Error identification
  * 
  * 								return 0 mean Error is found , return 1 mean Error is not found
  **/
-STD_Return ADC_Read_Value(u8 channel,u32 *AdcValue)
+STD_Return ADC_Read_Value(u8 channel,u16 *AdcValue)
 {
+	u16 AdcValue_Temp=0;
 	if (channel>MaxPinNum)
 		{
 			return E_OK;
@@ -178,24 +193,25 @@ STD_Return ADC_Read_Value(u8 channel,u32 *AdcValue)
 		{
 			 // combine between start conversion and get value
 
-			u16 AdcValue_Temp=0;
+			while(GET_BIT(ADCSRA,ADSC) == 1)
+			{
+				//Mask for non used bits of the 8 bits of the Regsiter
+				ADMUX &= Unselected_Channel_MASK;
 
-			//Mask for non used bits of the 8 bits of the Regsiter
-			ADMUX &= Unselected_Channel_MASK;
+				//Mask for the usage 3 bits of the 8 bits
+				ADMUX |= channel;
 
-			//Mask for the usage 3 bits of the 8 bits
-			ADMUX |= channel;
+				//Set the AdcStartConversion
+				SET_BIT(ADCSRA,ADSC);
+			} //looping until the the flag is set and conversion finished
 
-			//Set the AdcStartConversion
-			SET_BIT(ADCSRA,ADSC);
-
-			while((GET_BIT(ADCSRA,ADIF))==1); //looping until the the flag is set and conversion finished
+			//return the read value
 
 			#if defined Resolution_8_Bit
 				*AdcValue=ADCH;
 			#elif defined Resolution_10_Bit
-				AdcValue_Temp= ADCL + (ADCH<<8);
-				*AdcValue = (AdcValue_Temp & Resolution_10Bit_MASK);
+				AdcValue_Temp= ADCL + (ADCH<<8); //Get the values of the two ADC registers
+				*AdcValue = (AdcValue_Temp & Resolution_10Bit_MASK); //Mask higher bits in ADCH and read only the 10 bits for the ADC
 			#endif
 		}
 	return E_NOK;
@@ -214,7 +230,7 @@ STD_Return ADC_Read_Value(u8 channel,u32 *AdcValue)
  **/
 STD_Return ADC_ReadVolt (u8 channel,f32 *AdcVolt)
 	{
-		u32 AdcValue_Temp=0;
+		u16 AdcValue_Temp=0;
 		if(channel>MaxPinNum)
 			{
 				return E_OK;
@@ -239,7 +255,6 @@ void ADC_CallBack(void (*func_ptr)(void))
 	{
 		User_Function = func_ptr;
 	}
-/*****************************************************************************************************/
 /*********************************ISR ADC Vector******************************************************/
 ISR(ADC_Vect)
 {

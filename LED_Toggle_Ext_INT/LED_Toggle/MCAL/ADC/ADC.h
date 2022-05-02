@@ -34,6 +34,19 @@ typedef enum
 	ADC_Interrupt_ENABLE,
 	ADC_Interrupt_DISABLE
 }ADC_Interrupt_State_t; 
+/*****************************************************************************************************/
+/**
+ * @brief 
+ * enum : 			user define
+ * Description :	State Enable / Disable ADC Peripheral 
+ * 
+ * _t means that it is a datatype
+**/
+typedef enum
+{
+	ADC_ENABLE,
+	ADC_DISABLE
+}ADC__State_t; 
 /******************************************Defintions**********************************************/
 #define Unselected_Channel_MASK	0xF8
 #define Resolution_10Bit_MASK	0x3FF
@@ -47,7 +60,7 @@ typedef enum
  * @param   	void 	:  		has no input paramater
  * @return  	void 	:		Return nothing
  **/
-extern void ADC_Init(void);
+extern STD_Return ADC_Init(ADC__State_t State);
 /*****************************************************************************************************/
 /**
  * @brief 
@@ -83,7 +96,7 @@ extern STD_Return ADC_Start_conversion(u8 channel);
  * 
  * 								return 0 mean Error is found , return 1 mean Error is not found
  **/
-extern STD_Return ADC_Get_Value(u32 *AdcResult);
+extern STD_Return ADC_Get_Value(u16 *AdcResult);
 /*****************************************************************************************************/
 /**
  * @brief 
@@ -96,7 +109,7 @@ extern STD_Return ADC_Get_Value(u32 *AdcResult);
  * 
  * 								return 0 mean Error is found , return 1 mean Error is not found
  **/
-extern STD_Return ADC_Read_Value(u8 channel,u32 *AdcValue);
+extern STD_Return ADC_Read_Value(u8 channel,u16 *AdcValue);
 /*****************************************************************************************************/
 /**
  * @brief 

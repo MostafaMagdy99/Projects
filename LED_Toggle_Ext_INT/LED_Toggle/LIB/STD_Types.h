@@ -43,9 +43,9 @@ typedef float f32;
 typedef double f64;
 /******************************************************************************************************/
 
-/* enum for Error Return */
+/* Enum for Error Return */
 /* E_OK  : 	Error Return 
-/* E_NOK :	No Error Returend
+ * E_NOK :	No Error Returend
 */
 typedef enum
 	{

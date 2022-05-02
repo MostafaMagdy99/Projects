@@ -16,35 +16,43 @@
 
 /*********************************************************/
 /* Macro for set a certian bit in a register
-/*  Input: Reg:     Register name that contain the bit
-/*         BIT_NO:  bit number that to be Set
+ *  Input: Reg:     Register name that contain the bit
+ *         BIT_NO:  bit number that to be Set
+ *
+ */
 /*********************************************************/  
 
 #define SET_BIT(Reg,BIT_NO)           (Reg|=(1<<BIT_NO))
 
 /*********************************************************/
 /* Macro for Clear a certian bit in a register
-/*  Input: Reg:     Register name that contain the bit
-/*         BIT_NO:  bit number that to be Clear
+ *  Input: Reg:     Register name that contain the bit
+ *         BIT_NO:  bit number that to be Clear
+ *
+ */
 /*********************************************************/ 
 
 #define CLEAR_BIT(Reg,BIT_NO)         (Reg&=(~(1<<BIT_NO)))
 
 /*********************************************************/
 /* Macro for Toggle a certian bit in a register
-/*  Input: Reg:     Register name that contain the bit
-/*         BIT_NO:  bit number that to be Toggle
+ *  Input: Reg:     Register name that contain the bit
+ *         BIT_NO:  bit number that to be Toggle
+ *
+ */
 /*********************************************************/ 
 
 #define TOGGLE_BIT(Reg,BIT_NO)        (Reg^=(1<<BIT_NO))
 
 /*********************************************************/
 /* Macro for Get Value a certian bit in a register
-/*  Input: Reg:     Register name that contain the bit
-/*         BIT_NO:  bit number that to be Read/Value get
+ *  Input: Reg:     Register name that contain the bit
+ *         BIT_NO:  bit number that to be Read/Value get
+ *
+ */
 /*********************************************************/ 
 
-#define GET_BIT(Reg,BIT_NO)			((Reg>>BIT_NO)&1)
+#define GET_BIT(Reg,BIT_NO)			((Reg & (1<<BIT_NO))?1:0)
 
 /*This is preprocessor Header file guard End  */
 #endif 

@@ -378,10 +378,11 @@ STD_Return DIO_EnablePullup(DIO_Ports_t PORT, u8 PIN, DIO_PullUpState_t Pullstat
 						switch(Pullstate)
 							{
 								case ENABLE_PullUp:
-									CLEAR_BIT(PORTA,PIN);
+									CLEAR_BIT(DDRA,PIN);
+									SET_BIT(PORTA,PIN);
 									break;
 								case DISABLE_PullUp:
-									SET_BIT(PORTA,PIN);
+									SET_BIT(SFIOR,PUD);
 									break;
 								default:
 									return E_OK;
@@ -391,10 +392,11 @@ STD_Return DIO_EnablePullup(DIO_Ports_t PORT, u8 PIN, DIO_PullUpState_t Pullstat
 							switch(Pullstate)
 								{
 									case ENABLE_PullUp:
-										CLEAR_BIT(PORTB,PIN);
+										CLEAR_BIT(DDRB,PIN);
+										SET_BIT(PORTB,PIN);
 										break;
 									case DISABLE_PullUp:
-										SET_BIT(PORTB,PIN);
+										SET_BIT(SFIOR,PUD);
 										break;
 									default:
 										return E_OK;
@@ -404,10 +406,11 @@ STD_Return DIO_EnablePullup(DIO_Ports_t PORT, u8 PIN, DIO_PullUpState_t Pullstat
 								switch(Pullstate)
 									{
 										case ENABLE_PullUp:
-											CLEAR_BIT(PORTC,PIN);
+											CLEAR_BIT(DDRC,PIN);
+											SET_BIT(PORTC,PIN);
 											break;
 										case DISABLE_PullUp:
-											SET_BIT(PORTC,PIN);
+											SET_BIT(SFIOR,PUD);
 											break;
 										default:
 											return E_OK;
@@ -417,10 +420,11 @@ STD_Return DIO_EnablePullup(DIO_Ports_t PORT, u8 PIN, DIO_PullUpState_t Pullstat
 									switch(Pullstate)
 										{
 											case ENABLE_PullUp:
-												CLEAR_BIT(PORTD,PIN);
+												CLEAR_BIT(DDRD,PIN);
+												SET_BIT(PORTD,PIN);
 												break;
 											case DISABLE_PullUp:
-												SET_BIT(PORTD,PIN);
+												SET_BIT(SFIOR,PUD);
 												break;
 											default:
 												return E_OK;
