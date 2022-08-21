@@ -15,14 +15,38 @@
 f32 SensorVolt_Value;
 u16 SensorADC_Value;
 u8 CarsNumber=0;
-u8 Flag=0;
+u8 Flag;
+void PIR(void)
+{
+	ADC_ReadVolt_by_Interrupt(SensorOutput_PIN0,&SensorVolt_Value);//Get voltValue store in variable SensorVolt_Value
 
+	if((SensorVolt_Value!=0)&&(Flag==0))
+					{
+								CarsNumber=CarsNumber+1;
+								CLCD_SendCommand(LCD_GO_HOME);
+								CLCD_Display_Decimal_Number( CarsNumber);
+								CLCD_SendWord("  CarsEntered");
+								DIO_SetPinValue(BuzzerOutput_Port,BuzzerOutput_PIN4,DIO_HIGH);
+								DIO_SetPinValue(MotorOutput_Port,MotorOutput_PIN5,DIO_HIGH);
+								Flag=1;
+					}
+				else if ((SensorVolt_Value==0))
+				{
+					Flag=0;
+					DIO_SetPinValue(BuzzerOutput_Port,BuzzerOutput_PIN4,DIO_LOW);
+					DIO_SetPinValue(MotorOutput_Port,MotorOutput_PIN5,DIO_LOW);
+				}
+}
 void main(void)
 {
 	//initialization
 	DIO_init();
 	ADC_Init(ADC_ENABLE);
 	CLCD_init();
+
+	ADC_CallBack(&PIR);
+
+
 	//Define SensorPin
 	DIO_SetPinDirection(SensorOutput_Port,SensorOutput_PIN0,DIO_INPUT);
 	DIO_EnablePullup(SensorOutput_Port,SensorOutput_PIN0,ENABLE_PullUp);
@@ -31,41 +55,20 @@ void main(void)
 	//Define Motor Port Direction
 	DIO_SetPinDirection(MotorOutput_Port,MotorOutput_PIN5,DIO_OUTPUT);
 
-	//Enable peripherals
-	Enable_Global_Interrupt(Enable_Interrupt); //Enable GIE
-	ADC_SetInterrupt_Enable(ADC_Interrupt_ENABLE); //Enable ADIE
 
-	CLCD_Display_Decimal_Number( CarsNumber);
+	CLCD_Display_Decimal_Number(CarsNumber);
 	CLCD_SendWord("  CarsEntered");
 
+	ADC_SetInterrupt_Enable(ADC_Interrupt_ENABLE);
+	Enable_Global_Interrupt(Enable_Interrupt);
 	while(1)
 		{
-		while(GET_BIT(ADCSRA,ADIF)==0)
+			ADC_Start_conversion_by_Interrupt(SensorOutput_PIN0);
 
-		{
-			while(GET_BIT(ADCSRA,ADIE)==1)
-			{
-				ADC_Start_conversion(SensorOutput_PIN0);
-				ADC_Get_Value(&SensorADC_Value); //Get ADC_value store in variable SensorADC_value
-				ADC_ReadVolt(SensorOutput_PIN0,&SensorVolt_Value);//Get voltValue store in variable SensorVolt_Value
-				if((SensorVolt_Value!=0)&&(Flag==0))
-				{
-							CarsNumber=CarsNumber+1;
-							CLCD_SendCommand(LCD_GO_HOME);
-							CLCD_Display_Decimal_Number( CarsNumber);
-							CLCD_SendWord("  CarsEntered");
-							DIO_SetPinValue(BuzzerOutput_Port,BuzzerOutput_PIN4,DIO_HIGH);
-							DIO_SetPinValue(MotorOutput_Port,MotorOutput_PIN5,DIO_HIGH);
-							Flag=1;
-				}
-			else if ((SensorVolt_Value==0))
-			{
-				Flag=0;
-				DIO_SetPinValue(BuzzerOutput_Port,BuzzerOutput_PIN4,DIO_LOW);
-				DIO_SetPinValue(MotorOutput_Port,MotorOutput_PIN5,DIO_LOW);
-			}
-		}
-		}
+			//ADC_Start_conversion_by_Polling(SensorOutput_PIN0);
+			//ADC_ReadVolt_by_Polling(SensorOutput_PIN0,&SensorVolt_Value);//Get voltValue store in variable SensorVolt_Value
+
+
 
 		/*while(SensorVolt_Value!=0)
 					{
@@ -76,8 +79,9 @@ void main(void)
 
 					}
 					*/
-		}
 
+
+		}
 }
 
 

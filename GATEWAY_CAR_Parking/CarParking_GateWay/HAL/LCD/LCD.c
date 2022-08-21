@@ -158,3 +158,4 @@ void CLCD_Display_RealNumber(f32 num)
 	//Display the Right number to the decimal point
 	CLCD_Display_Decimal_Number(right);
 }
+

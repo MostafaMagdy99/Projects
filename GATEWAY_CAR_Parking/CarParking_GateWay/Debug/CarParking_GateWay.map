@@ -55,6 +55,7 @@ Allocating common symbols
 Common symbol       size              file
 
 SensorVolt_Value    0x4               ./App/main.o
+Flag                0x1               ./App/main.o
 SensorADC_Value     0x2               ./App/main.o
 
 Memory Configuration
@@ -178,7 +179,7 @@ LOAD c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a
 .rela.plt
  *(.rela.plt)
 
-.text           0x00000000     0x3f9c
+.text           0x00000000     0x40fc
  *(.vectors)
  .vectors       0x00000000       0x54 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5/crtm32.o
                 0x00000000                __vectors
@@ -368,75 +369,86 @@ LOAD c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a
  .text.ADC_SetInterrupt_Enable
                 0x00001ea6       0x64 ./MCAL/ADC/ADC.o
                 0x00001ea6                ADC_SetInterrupt_Enable
- .text.ADC_Start_conversion
+ .text.ADC_Start_conversion_by_Polling
                 0x00001f0a       0x64 ./MCAL/ADC/ADC.o
-                0x00001f0a                ADC_Start_conversion
+                0x00001f0a                ADC_Start_conversion_by_Polling
  .text.ADC_Get_Value
                 0x00001f6e       0x52 ./MCAL/ADC/ADC.o
                 0x00001f6e                ADC_Get_Value
- .text.ADC_Read_Value
+ .text.ADC_Read_Value_by_Polling
                 0x00001fc0       0xa6 ./MCAL/ADC/ADC.o
-                0x00001fc0                ADC_Read_Value
- .text.ADC_ReadVolt
+                0x00001fc0                ADC_Read_Value_by_Polling
+ .text.ADC_ReadVolt_by_Polling
                 0x00002066       0x92 ./MCAL/ADC/ADC.o
-                0x00002066                ADC_ReadVolt
+                0x00002066                ADC_ReadVolt_by_Polling
  .text.ADC_CallBack
                 0x000020f8       0x24 ./MCAL/ADC/ADC.o
                 0x000020f8                ADC_CallBack
  .text.__vector_16
                 0x0000211c       0x5a ./MCAL/ADC/ADC.o
                 0x0000211c                __vector_16
+ .text.ADC_Start_conversion_by_Interrupt
+                0x00002176       0x52 ./MCAL/ADC/ADC.o
+                0x00002176                ADC_Start_conversion_by_Interrupt
+ .text.ADC_Read_Value_by_Interrupt
+                0x000021c8       0x94 ./MCAL/ADC/ADC.o
+                0x000021c8                ADC_Read_Value_by_Interrupt
+ .text.ADC_ReadVolt_by_Interrupt
+                0x0000225c       0x92 ./MCAL/ADC/ADC.o
+                0x0000225c                ADC_ReadVolt_by_Interrupt
  .text.TimingSelection
-                0x00002176      0x22e ./HAL/StopWatch/StopWatch.o
-                0x00002176                TimingSelection
+                0x000022ee      0x22e ./HAL/StopWatch/StopWatch.o
+                0x000022ee                TimingSelection
  .text.SevenSegment_Display
-                0x000023a4     0x11e6 ./HAL/SevenSegment_Driver/SevenSegment.o
-                0x000023a4                SevenSegment_Display
+                0x0000251c     0x11e6 ./HAL/SevenSegment_Driver/SevenSegment.o
+                0x0000251c                SevenSegment_Display
  .text.CLCD_init
-                0x0000358a      0x142 ./HAL/LCD/LCD.o
-                0x0000358a                CLCD_init
+                0x00003702      0x142 ./HAL/LCD/LCD.o
+                0x00003702                CLCD_init
  .text.CLCD_SendCommand
-                0x000036cc      0x13c ./HAL/LCD/LCD.o
-                0x000036cc                CLCD_SendCommand
+                0x00003844      0x13c ./HAL/LCD/LCD.o
+                0x00003844                CLCD_SendCommand
  .text.CLCD_SendData
-                0x00003808      0x13c ./HAL/LCD/LCD.o
-                0x00003808                CLCD_SendData
+                0x00003980      0x13c ./HAL/LCD/LCD.o
+                0x00003980                CLCD_SendData
  .text.CLCD_SendWord
-                0x00003944       0x3a ./HAL/LCD/LCD.o
-                0x00003944                CLCD_SendWord
+                0x00003abc       0x3a ./HAL/LCD/LCD.o
+                0x00003abc                CLCD_SendWord
  .text.CLCD_GoToXY
-                0x0000397e       0x54 ./HAL/LCD/LCD.o
-                0x0000397e                CLCD_GoToXY
+                0x00003af6       0x54 ./HAL/LCD/LCD.o
+                0x00003af6                CLCD_GoToXY
  .text.CLCD_SendSpecialChar
-                0x000039d2       0x82 ./HAL/LCD/LCD.o
-                0x000039d2                CLCD_SendSpecialChar
+                0x00003b4a       0x82 ./HAL/LCD/LCD.o
+                0x00003b4a                CLCD_SendSpecialChar
  .text.CLCD_Display_Decimal_Number
-                0x00003a54      0x118 ./HAL/LCD/LCD.o
-                0x00003a54                CLCD_Display_Decimal_Number
+                0x00003bcc      0x118 ./HAL/LCD/LCD.o
+                0x00003bcc                CLCD_Display_Decimal_Number
  .text.CLCD_Display_RealNumber
-                0x00003b6c       0xb0 ./HAL/LCD/LCD.o
-                0x00003b6c                CLCD_Display_RealNumber
+                0x00003ce4       0xb0 ./HAL/LCD/LCD.o
+                0x00003ce4                CLCD_Display_RealNumber
  .text.KeyPad_Pressed_Key
-                0x00003c1c      0x128 ./HAL/Keypad/Keypad.o
-                0x00003c1c                KeyPad_Pressed_Key
- .text.main     0x00003d44      0x16c ./App/main.o
-                0x00003d44                main
- .text.libgcc   0x00003eb0       0x36 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_divmodsi4.o)
-                0x00003eb0                __divmodsi4
- .text.libgcc   0x00003ee6        0x0 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_exit.o)
- .text.libgcc   0x00003ee6        0x0 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_copy_data.o)
- .text.libgcc   0x00003ee6        0x0 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_clear_bss.o)
- .text.libgcc   0x00003ee6       0x44 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_udivmodsi4.o)
-                0x00003ee6                __udivmodsi4
- .text.libgcc   0x00003f2a       0x38 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_prologue.o)
-                0x00003f2a                __prologue_saves__
- .text.libgcc   0x00003f62       0x36 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_epilogue.o)
-                0x00003f62                __epilogue_restores__
-                0x00003f98                . = ALIGN (0x2)
+                0x00003d94      0x128 ./HAL/Keypad/Keypad.o
+                0x00003d94                KeyPad_Pressed_Key
+ .text.PIR      0x00003ebc       0xde ./App/main.o
+                0x00003ebc                PIR
+ .text.main     0x00003f9a       0x76 ./App/main.o
+                0x00003f9a                main
+ .text.libgcc   0x00004010       0x36 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_divmodsi4.o)
+                0x00004010                __divmodsi4
+ .text.libgcc   0x00004046        0x0 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_exit.o)
+ .text.libgcc   0x00004046        0x0 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_copy_data.o)
+ .text.libgcc   0x00004046        0x0 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_clear_bss.o)
+ .text.libgcc   0x00004046       0x44 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_udivmodsi4.o)
+                0x00004046                __udivmodsi4
+ .text.libgcc   0x0000408a       0x38 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_prologue.o)
+                0x0000408a                __prologue_saves__
+ .text.libgcc   0x000040c2       0x36 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_epilogue.o)
+                0x000040c2                __epilogue_restores__
+                0x000040f8                . = ALIGN (0x2)
  *(.fini9)
- .fini9         0x00003f98        0x0 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_exit.o)
-                0x00003f98                exit
-                0x00003f98                _exit
+ .fini9         0x000040f8        0x0 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_exit.o)
+                0x000040f8                exit
+                0x000040f8                _exit
  *(.fini9)
  *(.fini8)
  *(.fini8)
@@ -455,11 +467,11 @@ LOAD c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a
  *(.fini1)
  *(.fini1)
  *(.fini0)
- .fini0         0x00003f98        0x4 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_exit.o)
+ .fini0         0x000040f8        0x4 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_exit.o)
  *(.fini0)
-                0x00003f9c                _etext = .
+                0x000040fc                _etext = .
 
-.data           0x00800060      0x12e load address 0x00003f9c
+.data           0x00800060      0x12e load address 0x000040fc
                 0x00800060                PROVIDE (__data_start, .)
  *(.data)
  .data          0x00800060        0x0 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5/crtm32.o
@@ -571,15 +583,14 @@ LOAD c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a
  .bss.CarsNumber
                 0x00800196        0x1 ./App/main.o
                 0x00800196                CarsNumber
- .bss.Flag      0x00800197        0x1 ./App/main.o
-                0x00800197                Flag
  *(COMMON)
- COMMON         0x00800198        0x6 ./App/main.o
-                0x00800198                SensorVolt_Value
+ COMMON         0x00800197        0x7 ./App/main.o
+                0x00800197                SensorVolt_Value
+                0x0080019b                Flag
                 0x0080019c                SensorADC_Value
                 0x0080019e                PROVIDE (__bss_end, .)
-                0x00003f9c                __data_load_start = LOADADDR (.data)
-                0x000040ca                __data_load_end = (__data_load_start + SIZEOF (.data))
+                0x000040fc                __data_load_start = LOADADDR (.data)
+                0x0000422a                __data_load_end = (__data_load_start + SIZEOF (.data))
 
 .noinit         0x0080019e        0x0
                 0x0080019e                PROVIDE (__noinit_start, .)
@@ -604,37 +615,37 @@ LOAD c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a
 .signature
  *(.signature*)
 
-.stab           0x00000000     0x429c
+.stab           0x00000000     0x4494
  *(.stab)
  .stab          0x00000000      0x564 ./MCAL/External_Interrupt/External_Interrupt.o
  .stab          0x00000564      0x8e8 ./MCAL/DIO/DIO_program.o
                                 0x8f4 (size before relaxing)
- .stab          0x00000e4c      0x618 ./MCAL/ADC/ADC.o
-                                0x624 (size before relaxing)
- .stab          0x00001464       0xd8 ./MCAL/.metadata/.plugins/org.eclipse.cdt.managedbuilder.core/spec.o
+ .stab          0x00000e4c      0x804 ./MCAL/ADC/ADC.o
+                                0x810 (size before relaxing)
+ .stab          0x00001650       0xd8 ./MCAL/.metadata/.plugins/org.eclipse.cdt.managedbuilder.core/spec.o
                                  0xe4 (size before relaxing)
- .stab          0x0000153c       0xd8 ./MCAL/.metadata/.plugins/org.eclipse.cdt.make.core/specs.o
+ .stab          0x00001728       0xd8 ./MCAL/.metadata/.plugins/org.eclipse.cdt.make.core/specs.o
                                  0xe4 (size before relaxing)
- .stab          0x00001614       0xd8 ./MCAL/.metadata/.metadata/.plugins/org.eclipse.cdt.make.core/specs.o
+ .stab          0x00001800       0xd8 ./MCAL/.metadata/.metadata/.plugins/org.eclipse.cdt.make.core/specs.o
                                  0xe4 (size before relaxing)
- .stab          0x000016ec      0x474 ./HAL/StopWatch/StopWatch.o
+ .stab          0x000018d8      0x474 ./HAL/StopWatch/StopWatch.o
                                 0x480 (size before relaxing)
- .stab          0x00001b60       0xd8 ./HAL/SevenSegment_Driver/.metadata/.plugins/org.eclipse.cdt.make.core/specs.o
+ .stab          0x00001d4c       0xd8 ./HAL/SevenSegment_Driver/.metadata/.plugins/org.eclipse.cdt.make.core/specs.o
                                  0xe4 (size before relaxing)
- .stab          0x00001c38     0x1254 ./HAL/SevenSegment_Driver/SevenSegment.o
+ .stab          0x00001e24     0x1254 ./HAL/SevenSegment_Driver/SevenSegment.o
                                0x1260 (size before relaxing)
- .stab          0x00002e8c      0xb88 ./HAL/LCD/LCD.o
+ .stab          0x00003078      0xb88 ./HAL/LCD/LCD.o
                                 0xb94 (size before relaxing)
- .stab          0x00003a14      0x378 ./HAL/Keypad/Keypad.o
+ .stab          0x00003c00      0x378 ./HAL/Keypad/Keypad.o
                                 0x384 (size before relaxing)
- .stab          0x00003d8c       0xd8 ./HAL/.metadata/.plugins/org.eclipse.cdt.make.core/specs.o
+ .stab          0x00003f78       0xd8 ./HAL/.metadata/.plugins/org.eclipse.cdt.make.core/specs.o
                                  0xe4 (size before relaxing)
- .stab          0x00003e64      0x438 ./App/main.o
-                                0x5c4 (size before relaxing)
+ .stab          0x00004050      0x444 ./App/main.o
+                                0x5d0 (size before relaxing)
 
-.stabstr        0x00000000     0x2077
+.stabstr        0x00000000     0x2124
  *(.stabstr)
- .stabstr       0x00000000     0x2077 ./MCAL/External_Interrupt/External_Interrupt.o
+ .stabstr       0x00000000     0x2124 ./MCAL/External_Interrupt/External_Interrupt.o
 
 .stab.excl
  *(.stab.excl)
